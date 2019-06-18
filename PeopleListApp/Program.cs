@@ -21,26 +21,25 @@ namespace PeopleListApp
             Options Menus = new Options();
 
             Menus.WholeList(p_dbConnection); //Calls OptionMenu method and passes connection to the DB.
-
-            string selectLastPerson = "SELECT *FROM People ORDER BY id DESC LIMIT 1";
-            SQLiteCommand checkId = new SQLiteCommand(selectLastPerson, p_dbConnection);
-            SQLiteDataReader Idreader = checkId.ExecuteReader();
-            int newID = Convert.ToInt32(Idreader["id"]);/*Finds latest id and later adds 1 for next entry*/
-            Console.WriteLine("Options:");
             int MenuOption = 0;
-            Console.WriteLine("1.Create new entry into the database.");
-            Console.WriteLine("2.Delete entry");
-            ConsoleKeyInfo Exit;
+            MenuOption = Menus.MenuOptions(MenuOption);
+
+
             
-            {
-                MenuOption = Convert.ToInt32(Console.ReadLine());
+            
                 
                 switch (MenuOption)
                 {
                     case 1:
-                        do
+                    ConsoleKeyInfo Exit;
+                    do
                         {
+                            string selectLastPerson = "SELECT *FROM People ORDER BY id DESC LIMIT 1";
+                            SQLiteCommand checkId = new SQLiteCommand(selectLastPerson, p_dbConnection);
+                            SQLiteDataReader Idreader = checkId.ExecuteReader();
+                            int newID = Convert.ToInt32(Idreader["id"]);/*Finds latest id and later adds 1 for next entry*/
                             newID = newID + 1;
+                            
                             Console.WriteLine("Enter Name: ");
                             string newName = Console.ReadLine();
                             Console.WriteLine("Enter Surname: ");
@@ -50,9 +49,13 @@ namespace PeopleListApp
                             createCommand.ExecuteNonQuery();
                             Exit = Console.ReadKey(false);
                         } while (Exit.Key != ConsoleKey.Escape);
-                        break;
+                   
+                    break;
+                case 3:
+                    System.Environment.Exit(1);
+                    break;
                     default:
-                        Menus.OptionMenu(p_dbConnection);
+                        
                         break;
                 }
                 
@@ -63,7 +66,7 @@ namespace PeopleListApp
 
 
         }
-    }
+    
     class Database
     {
         public void CreateDatabase()

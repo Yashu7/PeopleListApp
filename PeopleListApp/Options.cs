@@ -19,5 +19,19 @@ namespace PeopleListApp
             while (reader.Read()) //Reader implementation.
             Console.WriteLine("id: " + reader["id"] + "\tName: " + reader["name"] + "\tSurname: " + reader["surname"]);
         }
+        public int MenuOptions(int MenuOption)
+        {
+            
+            do
+            {
+                Console.WriteLine("Options: ");
+                Console.WriteLine("1.Create new entry into the database.");
+                Console.WriteLine("2.Delete entry");
+                Console.WriteLine("3.Exit");
+                MenuOption = Convert.ToInt32(Console.ReadLine());
+            } while (MenuOption == 0);
+            return (MenuOption);
+            
+        }
     }
 }
