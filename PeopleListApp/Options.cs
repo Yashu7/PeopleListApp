@@ -9,7 +9,7 @@ namespace PeopleListApp
 {
     class Options
     {
-        public void OptionMenu(SQLiteConnection p_dbConnection)
+        public void WholeList(SQLiteConnection p_dbConnection)
         {
             string selectedPeopleDB = "select * from People";
             SQLiteCommand viewWholeDB = new SQLiteCommand(selectedPeopleDB, p_dbConnection);

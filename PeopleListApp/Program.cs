@@ -20,7 +20,7 @@ namespace PeopleListApp
             p_dbConnection.Open();
             Options Menus = new Options();
 
-            Menus.OptionMenu(p_dbConnection); //Calls OptionMenu method and passes connection to the DB.
+            Menus.WholeList(p_dbConnection); //Calls OptionMenu method and passes connection to the DB.
 
             string selectLastPerson = "SELECT *FROM People ORDER BY id DESC LIMIT 1";
             SQLiteCommand checkId = new SQLiteCommand(selectLastPerson, p_dbConnection);
