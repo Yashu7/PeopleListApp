@@ -14,32 +14,36 @@ namespace PeopleListApp
         {
 
 
-            
+
             SQLiteConnection p_dbConnection;
             p_dbConnection = new SQLiteConnection("Data Source =PersonDB.sqlite;Version=3;"); //Creating connection to existing DB.
             p_dbConnection.Open();
             Options Menus = new Options();
 
-            Menus.WholeList(p_dbConnection); //Calls OptionMenu method and passes connection to the DB.
-            int MenuOption = 0;
-            MenuOption = Menus.MenuOptions(MenuOption);
+            int y = 0;
+            int x = 0;
+            Menus.WholeList(p_dbConnection, y, x); //Calls OptionMenu method and passes connection to the DB.
 
 
-            
-            
-                
+
+
+            int MenuOption = 0; 
+            do //Menu loop.
+            {
+                MenuOption = Menus.MenuOptions(MenuOption);
+
                 switch (MenuOption)
                 {
                     case 1:
-                    ConsoleKeyInfo Exit;
-                    do
+                        ConsoleKeyInfo Exit;
+                        do
                         {
                             string selectLastPerson = "SELECT *FROM People ORDER BY id DESC LIMIT 1";
                             SQLiteCommand checkId = new SQLiteCommand(selectLastPerson, p_dbConnection);
                             SQLiteDataReader Idreader = checkId.ExecuteReader();
                             int newID = Convert.ToInt32(Idreader["id"]);/*Finds latest id and later adds 1 for next entry*/
                             newID = newID + 1;
-                            
+
                             Console.WriteLine("Enter Name: ");
                             string newName = Console.ReadLine();
                             Console.WriteLine("Enter Surname: ");
@@ -47,23 +51,28 @@ namespace PeopleListApp
                             string newPerson = String.Format("Insert into People (id,name,surname) values ('{0}','{1}','{2}')", newID, newName, newSurname);
                             SQLiteCommand createCommand = new SQLiteCommand(newPerson, p_dbConnection);
                             createCommand.ExecuteNonQuery();
+                            Console.WriteLine("Press ESC if you want to quit or ENTER if you want to add another entry: ");
                             Exit = Console.ReadKey(false);
                         } while (Exit.Key != ConsoleKey.Escape);
-                   
-                    break;
-                case 3:
-                    System.Environment.Exit(1);
-                    break;
-                    default:
+                        MenuOption = 0; //Returns to menu.
+                        break;
+                    case 3:
+                        System.Environment.Exit(1); //Quits app.
+                        break;
+                    case 4:
+                        Menus.WholeList(p_dbConnection, y, x);
+                        MenuOption = 0;
+                        break;
                         
+                    default:
+                        Console.WriteLine("This option doesn't exist.");
+                        MenuOption = 0; //Returns to menu.
                         break;
                 }
-                
-            } 
+            }
+            while (MenuOption == 0);
 
-
-
-
+        }
 
         }
     
