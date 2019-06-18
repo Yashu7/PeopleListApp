@@ -18,30 +18,50 @@ namespace PeopleListApp
             SQLiteConnection p_dbConnection;
             p_dbConnection = new SQLiteConnection("Data Source =PersonDB.sqlite;Version=3;"); //Creating connection to existing DB.
             p_dbConnection.Open();
+            Options Menus = new Options();
 
-            string selectedPeopleDB = "select * from People";
-            SQLiteCommand viewWholeDB = new SQLiteCommand(selectedPeopleDB, p_dbConnection);
-            SQLiteDataReader reader = viewWholeDB.ExecuteReader(); //Reader creation.
+            Menus.OptionMenu(p_dbConnection); //Calls OptionMenu method and passes connection to the DB.
 
-            Console.WriteLine("List of students: ");
-            while (reader.Read()) //Reader implementation.
-                Console.WriteLine("id: " + reader["id"] + "\tName: " + reader["name"] + "\tSurname: " + reader["surname"]);
-            
             string selectLastPerson = "SELECT *FROM People ORDER BY id DESC LIMIT 1";
             SQLiteCommand checkId = new SQLiteCommand(selectLastPerson, p_dbConnection);
             SQLiteDataReader Idreader = checkId.ExecuteReader();
             int newID = Convert.ToInt32(Idreader["id"]);/*Finds latest id and later adds 1 for next entry*/
             Console.WriteLine("Options:");
+            int MenuOption = 0;
             Console.WriteLine("1.Create new entry into the database.");
-            newID = newID + 1;
-            string newName = Console.ReadLine();
-            string newSurname = Console.ReadLine();
-            string newPerson = String.Format("Insert into People (id,name,surname) values ('{0}','{1}','{2}')", newID, newName, newSurname);
-            SQLiteCommand createCommand = new SQLiteCommand(newPerson, p_dbConnection);
-            createCommand.ExecuteNonQuery();
-
             Console.WriteLine("2.Delete entry");
+            ConsoleKeyInfo Exit;
             
+            {
+                MenuOption = Convert.ToInt32(Console.ReadLine());
+                
+                switch (MenuOption)
+                {
+                    case 1:
+                        do
+                        {
+                            newID = newID + 1;
+                            Console.WriteLine("Enter Name: ");
+                            string newName = Console.ReadLine();
+                            Console.WriteLine("Enter Surname: ");
+                            string newSurname = Console.ReadLine();
+                            string newPerson = String.Format("Insert into People (id,name,surname) values ('{0}','{1}','{2}')", newID, newName, newSurname);
+                            SQLiteCommand createCommand = new SQLiteCommand(newPerson, p_dbConnection);
+                            createCommand.ExecuteNonQuery();
+                            Exit = Console.ReadKey(false);
+                        } while (Exit.Key != ConsoleKey.Escape);
+                        break;
+                    default:
+                        Menus.OptionMenu(p_dbConnection);
+                        break;
+                }
+                
+            } 
+
+
+
+
+
         }
     }
     class Database
