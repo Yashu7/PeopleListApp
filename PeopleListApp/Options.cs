@@ -58,9 +58,14 @@ namespace PeopleListApp
                    
                 }
                 catch (FormatException) //Try/Catch if value isn't integer.
-                { 
+                {
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.BackgroundColor = ConsoleColor.Black;
                     Console.WriteLine("Option doesn't exist, please try again. (Options 1-3)");
                     MenuOption = Convert.ToInt32(Console.ReadLine());
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.BackgroundColor = ConsoleColor.White;
                 }
             } while (MenuOption == 0);
             return (MenuOption);

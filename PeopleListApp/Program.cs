@@ -12,7 +12,9 @@ namespace PeopleListApp
     {
         static void Main(string[] args)
         {
-
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.White;
+            
 
 
             SQLiteConnection p_dbConnection;
@@ -69,7 +71,11 @@ namespace PeopleListApp
                         break;
                         
                     default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.WriteLine("This option doesn't exist.");
+                        Console.ForegroundColor = ConsoleColor.Black;
+                        Console.BackgroundColor = ConsoleColor.White;
                         MenuOption = 0; //Returns to menu.
                         break;
                 }
