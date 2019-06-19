@@ -71,9 +71,11 @@ namespace PeopleListApp
             return (MenuOption);
             
         }
-        public void Delete(SQLiteConnection p_dbConnection) //Function that deletes row  by id.
+        public void Delete(SQLiteConnection p_dbConnection, int y, int x) //Function that deletes row  by id.
         {
-            Console.WriteLine("Insert Id number of person you wish to delete.");
+            Console.WriteLine("First look at the list again: ");
+            WholeList(p_dbConnection, y, x);
+            Console.WriteLine("Insert Id number of person from the list you wish to delete.");
             string IdToDelete = Console.ReadLine();
             string deleteRow = String.Format("DELETE FROM People WHERE id = '{0}'", IdToDelete);
             SQLiteCommand deleteCommand = new SQLiteCommand(deleteRow, p_dbConnection);

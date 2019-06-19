@@ -59,7 +59,7 @@ namespace PeopleListApp
                         MenuOption = 0; //Returns to menu.
                         break;
                     case 2:
-                        Menus.Delete(p_dbConnection); //Function that deletes row in DB by id.
+                        Menus.Delete(p_dbConnection, y, x); //Function that deletes row in DB by id.
                         MenuOption = 0;
                         break;
                     case 3:
