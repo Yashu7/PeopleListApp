@@ -20,7 +20,7 @@ namespace PeopleListApp
             p_dbConnection.Open();
             Options Menus = new Options();
 
-            int y = 0;
+            int y = 0; //Variables for window scrolling.
             int x = 0;
             Menus.WholeList(p_dbConnection, y, x); //Calls OptionMenu method and passes connection to the DB.
 
@@ -56,11 +56,15 @@ namespace PeopleListApp
                         } while (Exit.Key != ConsoleKey.Escape);
                         MenuOption = 0; //Returns to menu.
                         break;
+                    case 2:
+                        Menus.Delete(p_dbConnection); //Function that deletes row in DB by id.
+                        MenuOption = 0;
+                        break;
                     case 3:
                         System.Environment.Exit(1); //Quits app.
                         break;
                     case 4:
-                        Menus.WholeList(p_dbConnection, y, x);
+                        Menus.WholeList(p_dbConnection, y, x); //Shows whole list again.
                         MenuOption = 0;
                         break;
                         

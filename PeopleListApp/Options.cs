@@ -57,7 +57,7 @@ namespace PeopleListApp
                     MenuOption = Convert.ToInt32(Console.ReadLine());
                    
                 }
-                catch (FormatException)
+                catch (FormatException) //Try/Catch if value isn't integer.
                 { 
                     Console.WriteLine("Option doesn't exist, please try again. (Options 1-3)");
                     MenuOption = Convert.ToInt32(Console.ReadLine());
@@ -65,6 +65,14 @@ namespace PeopleListApp
             } while (MenuOption == 0);
             return (MenuOption);
             
+        }
+        public void Delete(SQLiteConnection p_dbConnection) //Function that deletes row  by id.
+        {
+            Console.WriteLine("Insert Id number of person you wish to delete.");
+            string IdToDelete = Console.ReadLine();
+            string deleteRow = String.Format("DELETE FROM People WHERE id = '{0}'", IdToDelete);
+            SQLiteCommand deleteCommand = new SQLiteCommand(deleteRow, p_dbConnection);
+            deleteCommand.ExecuteNonQuery();
         }
     }
 }
